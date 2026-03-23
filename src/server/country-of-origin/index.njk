@@ -1,0 +1,123 @@
+{% extends "layouts/page.njk" %}
+
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+{% from "govuk/components/select/macro.njk" import govukSelect %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% set pageTitle = pageTitle %}
+
+{% block pageTitle %}{{ pageTitle }}{% endblock %}
+
+{% block pageBeforeContent %}
+  {{ govukBackLink({
+    text: "Back",
+    href: backLink
+  }) }}
+{% endblock %}
+
+{% block main %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      {% if errorList | length %}
+        {{ govukErrorSummary({
+          titleText: "There is a problem",
+          errorList: errorList
+        }) }}
+      {% endif %}
+
+      <span class="govuk-caption-l">About the consignment</span>
+      <h1 class="govuk-heading-l">Origin of the import</h1>
+
+      <form method="post" novalidate>
+        <input type="hidden" name="crumb" value="{{ crumb }}">
+
+        {{ govukSelect({
+          id: "countryOfOriginCode",
+          name: "countryOfOriginCode",
+          label: {
+            text: "Country of origin",
+            classes: "govuk-label--s"
+          },
+          hint: {
+            text: "Search and select a country. Start typing to filter the list."
+          },
+          errorMessage: fieldErrors.countryOfOriginCode,
+          items: countryItems,
+          attributes: {
+            "data-module": "accessible-autocomplete"
+          }
+        }) }}
+
+        {% set regionCodeHtml %}
+          {{ govukInput({
+            id: "regionOfOriginCode",
+            name: "regionOfOriginCode",
+            label: {
+              text: "Enter the region of origin code"
+            },
+            hint: {
+              text: "Enter up to 5 characters."
+            },
+            value: regionOfOriginCode,
+            classes: "govuk-input--width-5",
+            errorMessage: fieldErrors.regionOfOriginCode,
+            attributes: {
+              maxlength: "5"
+            }
+          }) }}
+        {% endset %}
+
+        {{ govukRadios({
+          name: "regionOfOriginRequired",
+          fieldset: {
+            legend: {
+              text: "Does the consignment require a region of origin code?",
+              classes: "govuk-fieldset__legend--s"
+            }
+          },
+          hint: {
+            text: "If a region of origin code is required it will be shown on your health certificate."
+          },
+          errorMessage: fieldErrors.regionOfOriginRequired,
+          items: [
+            {
+              value: "yes",
+              text: "Yes",
+              checked: regionOfOriginRequired == "yes",
+              conditional: {
+                html: regionCodeHtml
+              }
+            },
+            {
+              value: "no",
+              text: "No",
+              checked: regionOfOriginRequired == "no"
+            }
+          ]
+        }) }}
+
+        {{ govukInput({
+          id: "internalReference",
+          name: "internalReference",
+          label: {
+            text: "Your internal reference number for this consignment (optional)",
+            classes: "govuk-label--s"
+          },
+          hint: {
+            text: "Enter any internal reference number you want to use to identify this consignment, or leave blank."
+          },
+          value: internalReference,
+          errorMessage: fieldErrors.internalReference
+        }) }}
+
+        {{ govukButton({
+          text: "Save and continue"
+        }) }}
+      </form>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,6 @@
+$govuk-assets-path: "/public/assets/";
+$govuk-global-styles: true;
+$govuk-new-organisation-colours: true;
+
+@import "node_modules/govuk-frontend/dist/govuk/all";
+@import "autocomplete";

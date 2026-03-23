@@ -1,0 +1,52 @@
+{% extends "layouts/page.njk" %}
+
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% set pageTitle = pageTitle %}
+
+{% block pageTitle %}{{ pageTitle }}{% endblock %}
+
+{% block pageBeforeContent %}
+  {{ govukBackLink({
+    text: "Back",
+    href: backLink
+  }) }}
+{% endblock %}
+
+{% block main %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+      <span class="govuk-caption-l">About the consignment</span>
+      <h1 class="govuk-heading-l">Reason for importing</h1>
+
+      {{ govukInsetText({
+        text: "This is a placeholder page. The reason for importing step will be implemented in the next part of the journey."
+      }) }}
+
+      <h2 class="govuk-heading-m">Origin details saved</h2>
+
+      {{ govukSummaryList({
+        rows: summaryRows
+      }) }}
+
+      <div class="govuk-button-group">
+        {{ govukButton({
+          text: "Back to origin",
+          href: backLink,
+          classes: "govuk-button--secondary"
+        }) }}
+
+        {{ govukButton({
+          text: "Return to dashboard",
+          href: "/dashboard",
+          classes: "govuk-button--secondary"
+        }) }}
+      </div>
+
+    </div>
+  </div>
+{% endblock %}
