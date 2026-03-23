@@ -6,21 +6,17 @@
 {% from "govuk/components/service-navigation/macro.njk" import govukServiceNavigation %}
 
 {% set htmlClasses = "govuk-template--rebranded" %}
-{% set assetPath = "/govuk/assets" %}
+{% set assetPath = "/public/assets" %}
 
 {% block headIcons %}
-  <link rel="icon" sizes="48x48" href="/govuk/assets/images/favicon.ico" />
-  <link rel="icon" sizes="any" href="/govuk/assets/images/favicon.svg" type="image/svg+xml" />
+  <link rel="icon" sizes="48x48" href="/public/assets/images/favicon.ico" />
+  <link rel="icon" sizes="any" href="/public/assets/images/favicon.svg" type="image/svg+xml" />
 {% endblock %}
 
 {% block head %}
-  {# Use pre-compiled govuk-frontend CSS from node_modules #}
-  <link href="/govuk/govuk-frontend.min.css" rel="stylesheet" />
-  {# Use webpack-built app CSS if available, otherwise inline autocomplete styles #}
   {% if getAssetPath %}
     <link href="{{ getAssetPath('application.css') }}" rel="stylesheet" />
   {% endif %}
-  <link href="/vendor/accessible-autocomplete/accessible-autocomplete.min.css" rel="stylesheet" />
 {% endblock %}
 
 {% block header %}
@@ -37,16 +33,21 @@
   }) }}
 {% endblock %}
 
-{% block beforeContent %}
-  {{ govukPhaseBanner({
-    tag: { text: "Prototype" },
-    html: "This is a prototype. Feedback helps us improve it."
-  }) }}
-  {% block pageBeforeContent %}{% endblock %}
-{% endblock %}
-
-{% block content %}
-  {% block main %}{% endblock %}
+{% block main %}
+  <div class="govuk-width-container">
+    {{ govukPhaseBanner({
+      tag: { text: "Prototype" },
+      html: "This is a prototype. Feedback helps us improve it."
+    }) }}
+    {% block pageBeforeContent %}{% endblock %}
+    <main class="govuk-main-wrapper" id="main-content">
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+          {% block pageContent %}{% endblock %}
+        </div>
+      </div>
+    </main>
+  </div>
 {% endblock %}
 
 {% block footer %}
@@ -59,23 +60,25 @@
 {% endblock %}
 
 {% block bodyEnd %}
-  {# govuk-frontend JS #}
-  <script type="module" src="/govuk/govuk-frontend.min.js"></script>
-  <script type="module">
-    import { initAll } from '/govuk/govuk-frontend.min.js'
-    initAll()
-  </script>
-  {# Accessible autocomplete #}
-  <script src="/vendor/accessible-autocomplete/accessible-autocomplete.min.js"></script>
-  <script>
-    var selectEl = document.querySelector('[data-module="accessible-autocomplete"]')
-    if (selectEl) {
-      accessibleAutocomplete.enhanceSelectElement({
-        selectElement: selectEl,
-        minLength: 1,
-        showAllValues: true,
-        defaultValue: ''
-      })
-    }
-  </script>
+  {% if getAssetPath %}
+    <script type="module" src="{{ getAssetPath('application.js') }}"></script>
+  {% else %}
+    <script type="module" src="/govuk/govuk-frontend.min.js"></script>
+    <script type="module">
+      import { initAll } from '/govuk/govuk-frontend.min.js'
+      initAll()
+    </script>
+    <script src="/vendor/accessible-autocomplete/accessible-autocomplete.min.js"></script>
+    <script>
+      var selectEl = document.querySelector('[data-module="accessible-autocomplete"]')
+      if (selectEl) {
+        accessibleAutocomplete.enhanceSelectElement({
+          selectElement: selectEl,
+          minLength: 1,
+          showAllValues: true,
+          defaultValue: ''
+        })
+      }
+    </script>
+  {% endif %}
 {% endblock %}

@@ -6,17 +6,13 @@
 
 {% block pageTitle %}{{ pageTitle }}{% endblock %}
 
-{% block main %}
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-      <h1 class="govuk-heading-xl">Import notification service</h1>
-      <p class="govuk-body-l">Use this service to create an import notification for live animals from the EU.</p>
+{% block pageContent %}
+  <h1 class="govuk-heading-xl">Import notification service</h1>
+  <p class="govuk-body-l">Use this service to create an import notification for live animals from the EU.</p>
 
-      {{ govukButton({
-        text: "Start now",
-        href: "/dashboard",
-        isStartButton: true
-      }) }}
-    </div>
-  </div>
+  {{ govukButton({
+    text: "Start now",
+    href: "/dashboard",
+    isStartButton: true
+  }) }}
 {% endblock %}

@@ -7,50 +7,46 @@
 
 {% block pageTitle %}{{ pageTitle }}{% endblock %}
 
-{% block main %}
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-full">
-      <h1 class="govuk-heading-xl">Import notification service</h1>
+{% block pageContent %}
+  <h1 class="govuk-heading-xl">Import notification service</h1>
 
-      <form method="post" action="/dashboard/create" novalidate>
-        <input type="hidden" name="crumb" value="{{ crumb }}">
-        {{ govukButton({
-          text: "Create an import notification"
-        }) }}
-      </form>
+  <form method="post" action="/dashboard/create" novalidate>
+    <input type="hidden" name="crumb" value="{{ crumb }}">
+    {{ govukButton({
+      text: "Create an import notification"
+    }) }}
+  </form>
 
-      {% if notifications.length > 0 %}
-        <table class="govuk-table">
-          <caption class="govuk-table__caption govuk-table__caption--m">Your notifications</caption>
-          <thead class="govuk-table__head">
-            <tr class="govuk-table__row">
-              <th scope="col" class="govuk-table__header">Reference</th>
-              <th scope="col" class="govuk-table__header">Country of origin</th>
-              <th scope="col" class="govuk-table__header">Status</th>
-              <th scope="col" class="govuk-table__header">Action</th>
-            </tr>
-          </thead>
-          <tbody class="govuk-table__body">
-            {% for notification in notifications %}
-              <tr class="govuk-table__row">
-                <td class="govuk-table__cell">{{ notification.reference }}</td>
-                <td class="govuk-table__cell">{{ notification.countryName or "Not set" }}</td>
-                <td class="govuk-table__cell">
-                  {{ govukTag({
-                    text: notification.statusTag.text,
-                    classes: notification.statusTag.classes
-                  }) }}
-                </td>
-                <td class="govuk-table__cell">
-                  <a href="/notifications/{{ notification.id }}/what-are-you-importing" class="govuk-link">View</a>
-                </td>
-              </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      {% else %}
-        <p class="govuk-body">You have no notifications.</p>
-      {% endif %}
-    </div>
-  </div>
+  {% if notifications.length > 0 %}
+    <table class="govuk-table">
+      <caption class="govuk-table__caption govuk-table__caption--m">Your notifications</caption>
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header">Reference</th>
+          <th scope="col" class="govuk-table__header">Country of origin</th>
+          <th scope="col" class="govuk-table__header">Status</th>
+          <th scope="col" class="govuk-table__header">Action</th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        {% for notification in notifications %}
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">{{ notification.reference }}</td>
+            <td class="govuk-table__cell">{{ notification.countryName or "Not set" }}</td>
+            <td class="govuk-table__cell">
+              {{ govukTag({
+                text: notification.statusTag.text,
+                classes: notification.statusTag.classes
+              }) }}
+            </td>
+            <td class="govuk-table__cell">
+              <a href="/notifications/{{ notification.id }}/what-are-you-importing" class="govuk-link">View</a>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p class="govuk-body">You have no notifications.</p>
+  {% endif %}
 {% endblock %}

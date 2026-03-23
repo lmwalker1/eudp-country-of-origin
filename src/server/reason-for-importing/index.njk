@@ -16,37 +16,31 @@
   }) }}
 {% endblock %}
 
-{% block main %}
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
+{% block pageContent %}
+  <span class="govuk-caption-l">About the consignment</span>
+  <h1 class="govuk-heading-l">Reason for importing</h1>
 
-      <span class="govuk-caption-l">About the consignment</span>
-      <h1 class="govuk-heading-l">Reason for importing</h1>
+  {{ govukInsetText({
+    text: "This is a placeholder page. The reason for importing step will be implemented in the next part of the journey."
+  }) }}
 
-      {{ govukInsetText({
-        text: "This is a placeholder page. The reason for importing step will be implemented in the next part of the journey."
-      }) }}
+  <h2 class="govuk-heading-m">Origin details saved</h2>
 
-      <h2 class="govuk-heading-m">Origin details saved</h2>
+  {{ govukSummaryList({
+    rows: summaryRows
+  }) }}
 
-      {{ govukSummaryList({
-        rows: summaryRows
-      }) }}
+  <div class="govuk-button-group">
+    {{ govukButton({
+      text: "Back to origin",
+      href: backLink,
+      classes: "govuk-button--secondary"
+    }) }}
 
-      <div class="govuk-button-group">
-        {{ govukButton({
-          text: "Back to origin",
-          href: backLink,
-          classes: "govuk-button--secondary"
-        }) }}
-
-        {{ govukButton({
-          text: "Return to dashboard",
-          href: "/dashboard",
-          classes: "govuk-button--secondary"
-        }) }}
-      </div>
-
-    </div>
+    {{ govukButton({
+      text: "Return to dashboard",
+      href: "/dashboard",
+      classes: "govuk-button--secondary"
+    }) }}
   </div>
 {% endblock %}
