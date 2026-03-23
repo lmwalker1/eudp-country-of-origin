@@ -74,6 +74,24 @@ export async function createServer() {
     }
   })
 
+  // Debug: check paths on server
+  server.route({
+    method: 'GET',
+    path: '/debug-paths',
+    handler: () => {
+      const publicDir = path.join(projectRoot, 'public')
+      return {
+        projectRoot,
+        cwd: process.cwd(),
+        publicDir,
+        publicExists: existsSync(publicDir),
+        publicContents: existsSync(publicDir) ? readdirSync(publicDir).slice(0, 15) : 'DIR NOT FOUND',
+        cwdContents: readdirSync(process.cwd()).slice(0, 15)
+      }
+    },
+    options: { auth: false }
+  })
+
   // Static assets - webpack built assets
   server.route({
     method: 'GET',
