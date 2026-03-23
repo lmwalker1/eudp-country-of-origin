@@ -48,7 +48,7 @@ export async function createServer() {
       },
       cookieOptions: {
         password: config.get('session.cookiePassword'),
-        isSecure: config.get('env') === 'production',
+        isSecure: false,
         isHttpOnly: true,
         isSameSite: 'Lax'
       }
@@ -60,7 +60,7 @@ export async function createServer() {
     plugin: crumb,
     options: {
       cookieOptions: {
-        isSecure: config.get('env') === 'production'
+        isSecure: false
       }
     }
   })
@@ -72,24 +72,6 @@ export async function createServer() {
       level: config.get('logLevel'),
       redact: ['req.headers.authorization', 'req.headers.cookie']
     }
-  })
-
-  // Debug: check paths on server
-  server.route({
-    method: 'GET',
-    path: '/debug-paths',
-    handler: () => {
-      const publicDir = path.join(projectRoot, 'public')
-      return {
-        projectRoot,
-        cwd: process.cwd(),
-        publicDir,
-        publicExists: existsSync(publicDir),
-        publicContents: existsSync(publicDir) ? readdirSync(publicDir).slice(0, 15) : 'DIR NOT FOUND',
-        cwdContents: readdirSync(process.cwd()).slice(0, 15)
-      }
-    },
-    options: { auth: false }
   })
 
   // Static assets - webpack built assets
