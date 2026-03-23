@@ -152,25 +152,6 @@ export async function createServer() {
     }
   })
 
-  // Debug: check paths
-  server.route({
-    method: 'GET',
-    path: '/debug-paths',
-    handler: () => {
-      const govukPath = path.join(projectRoot, 'node_modules', 'govuk-frontend', 'dist', 'govuk')
-      return {
-        projectRoot,
-        cwd: process.cwd(),
-        govukPath,
-        govukExists: existsSync(govukPath),
-        govukCssExists: existsSync(path.join(govukPath, 'govuk-frontend.min.css')),
-        publicPath: path.join(projectRoot, 'public'),
-        publicExists: existsSync(path.join(projectRoot, 'public'))
-      }
-    },
-    options: { auth: false }
-  })
-
   // 6. Application routes
   await server.register(router)
 
