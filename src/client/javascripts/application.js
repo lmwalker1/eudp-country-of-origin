@@ -15,22 +15,11 @@ autocompleteSelects.forEach((selectElement) => {
   accessibleAutocomplete.enhanceSelectElement({
     selectElement,
     minLength: 1,
-    showAllValues: true,
-    autoselect: true,
+    showAllValues: false,
+    autoselect: false,
     defaultValue,
     confirmOnBlur: true,
     showNoOptionsFound: true,
-    onConfirm: (value) => {
-      // When a value is confirmed, update the hidden select
-      // The accessible-autocomplete should do this automatically,
-      // but we ensure the select value is synced
-      const options = Array.from(selectElement.options)
-      const match = options.find(
-        (opt) => opt.textContent.trim() === value
-      )
-      if (match) {
-        selectElement.value = match.value
-      }
-    }
+    placeholder: ''
   })
 })

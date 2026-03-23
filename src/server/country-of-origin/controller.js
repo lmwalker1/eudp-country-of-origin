@@ -6,7 +6,7 @@ import { originSchema } from './schema.js'
 
 function buildCountryItems(selectedCode) {
   return [
-    { value: '', text: 'Type country name', selected: !selectedCode },
+    { value: '', text: '' },
     ...EU_MEMBER_STATES.map((c) => ({
       value: c.code,
       text: c.name,
