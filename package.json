@@ -1,11 +1,11 @@
 {
   "name": "eudp-country-of-origin",
-  "version": "1.1.0",
+  "version": "2.0.0",
   "description": "EU live animals import notification service - Country of Origin",
   "type": "module",
   "main": "src/index.js",
   "scripts": {
-    "build": "echo 'Using pre-compiled govuk-frontend assets from node_modules'",
+    "build": "echo 'Build v2 - serving pre-compiled govuk-frontend assets from node_modules' && date",
     "build:dev": "webpack --config webpack.config.js --mode development",
     "dev": "npm run build:dev && node --watch src/index.js",
     "start": "node src/index.js",
