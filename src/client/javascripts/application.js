@@ -8,7 +8,6 @@ const autocompleteSelects = document.querySelectorAll(
   '[data-module="accessible-autocomplete"]'
 )
 autocompleteSelects.forEach((selectElement) => {
-  // Get the currently selected value to preserve it after enhancement
   const selectedOption = selectElement.querySelector('option[selected]')
   const defaultValue = selectedOption ? selectedOption.textContent.trim() : ''
 
@@ -16,10 +15,20 @@ autocompleteSelects.forEach((selectElement) => {
     selectElement,
     minLength: 1,
     showAllValues: false,
-    autoselect: false,
+    autoselect: true,
     defaultValue,
     confirmOnBlur: true,
     showNoOptionsFound: true,
-    placeholder: ''
+    placeholder: '',
+    onConfirm: (value) => {
+      // Close the menu by blurring after a short delay
+      // This allows the accessible-autocomplete to finish its internal state update
+      setTimeout(() => {
+        const input = selectElement.parentElement.querySelector('.autocomplete__input')
+        if (input) {
+          input.blur()
+        }
+      }, 100)
+    }
   })
 })
